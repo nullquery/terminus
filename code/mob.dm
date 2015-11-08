@@ -10,14 +10,18 @@
 
 	Login()
 	{
+		src.r_name = src.key
 		if (src.chunk)									{ src.chunk.Login(src); }
 
 		spawn(30)
 			world.log << "src.chunk = [src.chunk] - [src.chunk.used_by]"
-		spawn (20)
-		{
-			src << output("Honk!", "main_output");
-		}
+
+/*
+		spawn (10)
+			while (TRUE)
+				sleep(1)
+				say("Can't... stop... talking...! Your lucky number is [rand(1,100)].")
+*/
 
 		return ..()
 	}
@@ -54,6 +58,17 @@
 	verb/create()
 		var/datum/map_screens/ms = new/datum/map_screens/map_loader()
 		ms.Populate(2, 2, 1)
+}
+
+/mob/verb/say(t as text)
+{
+	for (var/mob/mob in view(src))
+	{
+		if (mob.client)
+		{
+			mob.client.SendChatMessage(src.name, "says", t);
+		}
+	}
 }
 
 var/list/times = new/list()

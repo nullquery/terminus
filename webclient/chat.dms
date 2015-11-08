@@ -28,31 +28,63 @@
 			font-family: Arial;
 			font-size: 15px;
 			padding: 4px;
+			overflow: auto;
+			overflow-x: hidden;
+			height: 100%;
 		}
 
 		.chat > .output p
 		{
 			margin: 2px 0px;
 		}
-	</style>
-	<script>
+
+		.chat > .output .name
 		{
-			fn:
+			font-weight: 600;
+		}
+
+		.chat > .output .message
+		{
+			font-style: italic;
+		}
+	</style>
+<script>
+	{
+		fn:
+		{
+			output: function(obj)
 			{
-				output: function(obj)
+				try
 				{
-					if (obj.hasOwnProperty("text"))
-					{
-						jQuery(this.ui.content).append($("<p></p>").text(obj.text));
-					}
+					var name			= obj.list[0]["text"];
+					var type			= obj.list[1]["text"];
+					var message			= obj.list[2]["text"];
+
+					var elem			= jQuery("<p></p>"); // not to be confused with this.elem
+
+					elem.append($("<span class=\"name\"></span>").text(name));
+					elem.append($("<span></span>").text(" " + type + ", \""));
+					elem.append($("<span class=\"message\"></span>").text(message));
+					elem.append($("<span></span>").text("\""));
+
+					var outputElem		= jQuery(this.elem).find(".output");
+					var canScroll		= (outputElem.outerHeight() + outputElem[0].scrollTop) >= (outputElem[0].scrollHeight - 8);
+
+					outputElem.append(elem);
+
+					if (canScroll)		{ outputElem.scrollTop(outputElem[0].scrollHeight); }
+				}
+				catch (ex)
+				{
+					// TODO: Send message back to the server.
+					console.log(ex);
 				}
 			}
 		}
-	</script>
+	}
+</script>
 	<div class="chat">
 		<div class="bg"></div>
-		<div class="output">
-			<p>Hello, world.</p>
-		</div>
+		<div class="output"></div>
 	</div>
 </byondclass>

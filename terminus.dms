@@ -16,13 +16,62 @@
 			height: 100%;
 		}
 
-		#main_output > .chat
+		#main_output > .chat, #input
 		{
 			position: absolute;
 			left: 8px;
 			right: 8px;
-			bottom: 0px;
+		}
+
+		#main_output > .chat
+		{
+			bottom: 24px;
 			height: 200px;
+		}
+
+		#main_output > .chat > .bg
+		{
+			border-bottom-left-radius: 0px;
+			border-bottom-right-radius: 0px;
+			border-bottom: 0px;
+		}
+
+		#input
+		{
+			bottom: 0px;
+			height: 24px;
+		}
+
+		#input:before
+		{
+			content: "";
+			display: block;
+			position: absolute;
+			top: 0px;
+			bottom: 0px;
+			left: 0px;
+			right: 0px;
+
+			border: 1px solid #DCDCDC;
+			border-radius: 6px;
+			border-top-left-radius: 0px;
+			border-top-right-radius: 0px;
+			background-color: #EFEFEF;
+			opacity: 0.7;
+			filter: alpha(opacity=70);
+		}
+
+		#input > input
+		{
+			font-family: Arial;
+			font-size: 15px;
+			height: 24px;
+			background: transparent;
+			border: 0px;
+			padding: 0px 4px;
+			position: relative;
+			z-index: 2;
+			outline: 0;
 		}
 	</style>
 </head>
@@ -30,5 +79,6 @@
 	<div id="container">
 		<div id="map" byondclass="map"></div>
 		<div id="main_output" byondclass="chat"></div>
+		<div id="input" byondclass="input" skinparams="is-default=true;command=!say &quot;"></div>
 	</div>
 </body>

@@ -27,9 +27,9 @@
 	}
 }
 
-/client/proc/ShowMessage(message, element_id)
+/client/proc/SendChatMessage(name, type, message)
 {
-
+	src << output(list("[name]", "[type]", "[message]"), "main_output");
 }
 
 /*
