@@ -3,6 +3,10 @@
 // END_INTERNALS
 // BEGIN_FILE_DIR
 #define FILE_DIR .
+#define FILE_DIR "icon"
+#define FILE_DIR "icon/map_screens"
+#define FILE_DIR "icon/mob"
+#define FILE_DIR "icon/turf"
 // END_FILE_DIR
 // BEGIN_PREFERENCES
 #define DEBUG
@@ -28,4 +32,5 @@
 #include "code\modules\mob\appearance.dm"
 #include "code\modules\mob\living\living.dm"
 #include "code\modules\mob\living\carbon\human\human.dm"
+#include "webclient\chat.dms"
 // END_INCLUDE

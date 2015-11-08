@@ -14,6 +14,10 @@
 
 		spawn(30)
 			world.log << "src.chunk = [src.chunk] - [src.chunk.used_by]"
+		spawn (20)
+		{
+			src << output("Honk!", "main_output");
+		}
 
 		return ..()
 	}

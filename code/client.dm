@@ -27,6 +27,11 @@
 	}
 }
 
+/client/proc/ShowMessage(message, element_id)
+{
+
+}
+
 /*
 /client/verb/switch_view()
 {
