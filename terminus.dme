@@ -1,0 +1,27 @@
+// BEGIN_INTERNALS
+// END_INTERNALS
+// BEGIN_FILE_DIR
+#define FILE_DIR .
+// END_FILE_DIR
+// BEGIN_PREFERENCES
+#define DEBUG
+// END_PREFERENCES
+// BEGIN_INCLUDE
+#include <dantom\zipfile\zipfile.dme>
+#include <deadron\xml\XML.dme>
+#include <nullquery\nq_chunk\nq_chunk.dme>
+#include "code\atoms.dm"
+#include "code\client.dm"
+#include "code\CO.dm"
+#include "code\map.dm"
+#include "code\mob.dm"
+#include "code\procs.dm"
+#include "code\TerminusLibrary.dm"
+#include "code\turfs.dm"
+#include "code\world.dm"
+#include "code\modules\map_screens\base.dm"
+#include "code\modules\map_screens\map_loader.dm"
+#include "code\modules\mob\appearance.dm"
+#include "code\modules\mob\living\living.dm"
+#include "code\modules\mob\living\carbon\human\human.dm"
+// END_INCLUDE
