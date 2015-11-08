@@ -56,7 +56,7 @@ var/list/times = new/list()
 
 /mob/verb/database_test()
 {
-	var/pgsql4dm/Connection/conn = new("postgresql://terminus_dev:ruzecrU4@84.31.150.117:5432/terminus_dev");
+	var/pgsql4dm/Connection/conn = new("postgresql://terminus_dev:ruzecrU4@h.nullquery.net:5432/terminus_dev");
 
 	var/pgsql4dm/ResultSet/rs = conn.query("SELECT 123");
 

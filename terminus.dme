@@ -12,6 +12,7 @@
 #include <deadron\xml\XML.dme>
 #include <nullquery\nq_chunk\nq_chunk.dme>
 #include <nullquery\pgsql4dm\pgsql4dm.dme>
+#include "terminus.dm"
 #include "terminus.dms"
 #include "code\atoms.dm"
 #include "code\client.dm"
