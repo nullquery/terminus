@@ -1,11 +1,8 @@
+#include "terminus.dm"
 // BEGIN_INTERNALS
 // END_INTERNALS
 // BEGIN_FILE_DIR
 #define FILE_DIR .
-#define FILE_DIR "icon"
-#define FILE_DIR "icon/map_screens"
-#define FILE_DIR "icon/mob"
-#define FILE_DIR "icon/turf"
 // END_FILE_DIR
 // BEGIN_PREFERENCES
 #define DEBUG
@@ -14,6 +11,7 @@
 #include <dantom\zipfile\zipfile.dme>
 #include <deadron\xml\XML.dme>
 #include <nullquery\nq_chunk\nq_chunk.dme>
+#include <nullquery\pgsql4dm\pgsql4dm.dme>
 #include "terminus.dms"
 #include "code\atoms.dm"
 #include "code\client.dm"

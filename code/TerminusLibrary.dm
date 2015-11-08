@@ -20,7 +20,7 @@ var/datum/TerminusLibrary/TerminusLibrary = new/datum/TerminusLibrary();
 	{
 		sleep(10);
 
-		world.log << "messages: [html_encode(Call("getMessages"))]"
+//		world.log << "messages: [html_encode(Call("getMessages"))]"
 /*
 		root								= xmlRootFromString(Call("getMessages"));
 		messages							= root.Descendants("message");

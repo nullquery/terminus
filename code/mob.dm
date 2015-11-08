@@ -54,6 +54,18 @@
 
 var/list/times = new/list()
 
+/mob/verb/database_test()
+{
+	var/pgsql4dm/Connection/conn = new("postgresql://terminus_dev:ruzecrU4@84.31.150.117:5432/terminus_dev");
+
+	var/pgsql4dm/ResultSet/rs = conn.query("SELECT 123");
+
+	if (rs.next())
+	{
+		world.log << "123 = [rs.getNumber(1)]"
+	}
+}
+
 /mob/verb/Init()
 {
 	set instant = 1;
@@ -65,7 +77,7 @@ var/list/times = new/list()
 	}
 	*/
 
-	. = call(world.system_type == MS_WINDOWS ? "./libterminus.dll" : "./libterminus.so", "initialize")()
+	. = TerminusLibrary.Call("initialize")
 	if (. in times)
 		world.log << "ERROR CONDITION"
 	times.Add(.)
