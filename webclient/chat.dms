@@ -11,10 +11,10 @@
 			top: 0px;
 			bottom: 0px;
 			left: 0px;
-			right: 0px;
+			right: 422px;
 			opacity: 0.7;
 			filter: alpha(opacity=70); /* IE8 */
-			background-color: #FCFCFC;
+			background-color: gray;
 			z-index: 1;
 			border: 1px solid #DCDCDC;
 			border-radius: 6px;
@@ -31,6 +31,7 @@
 			overflow: auto;
 			overflow-x: hidden;
 			height: 100%;
+			width: 70.3%;
 		}
 
 		.chat > .output p

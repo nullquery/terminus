@@ -3,6 +3,10 @@
 // END_INTERNALS
 // BEGIN_FILE_DIR
 #define FILE_DIR .
+#define FILE_DIR "icon"
+#define FILE_DIR "icon/map_screens"
+#define FILE_DIR "icon/mob"
+#define FILE_DIR "icon/turf"
 // END_FILE_DIR
 // BEGIN_PREFERENCES
 #define DEBUG
