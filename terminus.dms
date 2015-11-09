@@ -1,8 +1,28 @@
 <head>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
-	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" />
-	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script>
+		function waitForJquery(callback)
+		{
+			try				{ jQuery(); callback(); }
+			catch (ex)		{ setTimeout(waitForJquery.bind(null, callback), 10); }
+		}
+
+		waitForJquery(function()
+		{
+			$(document).ready(function()
+			{
+				try
+				{
+					$.getScript("http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js");
+				}
+				catch (ex)
+				{
+					// TODO: Log on the server-side.
+					alert("ERROR: " + ex.message);
+				}
+			});
+		});
+	</script>
 	<style>
 		#container
 		{
@@ -82,12 +102,24 @@
 			position: absolute; top: 8px; left: 8px; width: auto;
 		}
 	</style>
+	<script type="text/javascript">
+		waitForJquery(function()
+		{
+			$(document).ready(function()
+			{
+				$("#mybutton").on("click", function()
+				{
+					byond.fn.topic("test");
+				});
+			});
+		});
+	</script>
 </head>
 <body>
 	<div id="container">
 		<div id="map" byondclass="map"></div>
 		<div id="main_output" byondclass="chat"></div>
 		<div id="input" byondclass="input" skinparams="is-default=true;command=!say &quot;"></div>
-		<button type="button" class="btn btn-primary">Cross your fingers...</button>
+		<button type="button" class="btn btn-primary" id="mybutton">Button!</button>
 	</div>
 </body>

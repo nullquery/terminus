@@ -48,41 +48,41 @@
 			font-style: italic;
 		}
 	</style>
-<script>
-	{
-		fn:
+	<script>
 		{
-			output: function(obj)
+			fn:
 			{
-				try
+				output: function(obj)
 				{
-					var name			= obj.list[0]["text"];
-					var type			= obj.list[1]["text"];
-					var message			= obj.list[2]["text"];
+					try
+					{
+						var name			= obj.list[0]["text"];
+						var type			= obj.list[1]["text"];
+						var message			= obj.list[2]["text"];
 
-					var elem			= jQuery("<p></p>"); // not to be confused with this.elem
+						var elem			= jQuery("<p></p>"); // not to be confused with this.elem
 
-					elem.append($("<span class=\"name\"></span>").text(name));
-					elem.append($("<span></span>").text(" " + type + ", \""));
-					elem.append($("<span class=\"message\"></span>").text(message));
-					elem.append($("<span></span>").text("\""));
+						elem.append($("<span class=\"name\"></span>").text(name));
+						elem.append($("<span></span>").text(" " + type + ", \""));
+						elem.append($("<span class=\"message\"></span>").text(message));
+						elem.append($("<span></span>").text("\""));
 
-					var outputElem		= jQuery(this.elem).find(".output");
-					var canScroll		= (outputElem.outerHeight() + outputElem[0].scrollTop) >= (outputElem[0].scrollHeight - 8);
+						var outputElem		= jQuery(this.elem).find(".output");
+						var canScroll		= (outputElem.outerHeight() + outputElem[0].scrollTop) >= (outputElem[0].scrollHeight - 8);
 
-					outputElem.append(elem);
+						outputElem.append(elem);
 
-					if (canScroll)		{ outputElem.scrollTop(outputElem[0].scrollHeight); }
-				}
-				catch (ex)
-				{
-					// TODO: Send message back to the server.
-					console.log(ex);
+						if (canScroll)		{ outputElem.scrollTop(outputElem[0].scrollHeight); }
+					}
+					catch (ex)
+					{
+						// TODO: Send message back to the server.
+						console.log(ex);
+					}
 				}
 			}
 		}
-	}
-</script>
+	</script>
 	<div class="chat">
 		<div class="bg"></div>
 		<div class="output"></div>

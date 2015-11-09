@@ -27,6 +27,18 @@
 	}
 }
 
+/client/Topic(href, href_list[], hsrc)
+{
+	if (hsrc)					{ return ..() }
+	else
+	{
+		if (href == "test")
+		{
+			world.log << "Cool."
+		}
+	}
+}
+
 /client/proc/SendChatMessage(name, type, message)
 {
 	src << output(list("[name]", "[type]", "[message]"), "main_output");
