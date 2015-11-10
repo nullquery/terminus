@@ -1,0 +1,41 @@
+<byondclass name="playerinfo">
+	<style>
+
+	.panel-default
+	{
+		border-color: #9B9B9B;
+	}
+
+	</style>
+	<script>
+		{
+			fn:
+			{
+				output: function(obj)
+				{
+					try
+					{
+						var name			= obj.list[0]["text"];
+
+						$(this.elem).find(".player_name").text(name);
+					}
+					catch (ex)
+					{
+						// TODO: Send message back to the server.
+						console.log(ex);
+					}
+				}
+			}
+		}
+	</script>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">
+				<p>Character Information</p>
+			</h3>
+		</div>
+		<div class="panel-body">
+			<p>Name: <span class="player_name"></span></p>
+		</div>
+	</div>
+</byondclass>

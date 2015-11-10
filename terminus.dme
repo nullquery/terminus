@@ -33,5 +33,6 @@
 #include "code\modules\mob\living\living.dm"
 #include "code\modules\mob\living\carbon\human\human.dm"
 #include "webclient\chat.dms"
+#include "webclient\playerinfo.dms"
 #include "webclient\resources\bootstrap_do_not_open_in_dm.dms"
 // END_INCLUDE

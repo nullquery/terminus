@@ -11,6 +11,9 @@
 	Login()
 	{
 		src.r_name = src.key
+
+		src << output(list("[src.r_name]"), "playerinfo");
+
 		if (src.chunk)									{ src.chunk.Login(src); }
 
 		spawn(30)

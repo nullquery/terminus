@@ -18,6 +18,7 @@
 			z-index: 1;
 			border: 1px solid #DCDCDC;
 			border-radius: 6px;
+			width: 676px;
 		}
 
 		.chat > .output
@@ -31,12 +32,13 @@
 			overflow: auto;
 			overflow-x: hidden;
 			height: 100%;
-			width: 70.3%;
+			width: 100%;
 		}
 
 		.chat > .output p
 		{
 			margin: 2px 0px;
+			font-size: 12px;
 		}
 
 		.chat > .output .name
