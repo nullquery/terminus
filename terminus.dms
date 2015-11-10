@@ -3,7 +3,13 @@
 	<script>
 		function waitForJquery(callback)
 		{
-			try				{ jQuery(); callback(); }
+			try
+			{
+				jQuery();
+
+				try			{ callback(); }
+				catch (ex)	{ alert(ex.message); }
+			}
 			catch (ex)		{ setTimeout(waitForJquery.bind(null, callback), 10); }
 		}
 
@@ -28,45 +34,88 @@
 		{
 			position: relative;
 			background-color: #525353;
-			width: 980px;
-			height: 600px;
+			width: 480px;
+			height: 480px;
 			margin: 0 auto;
 			border: 2px solid #8C8181
 		}
 
 		#map
 		{
-			width: 70%;
-			height: 75%;
+			width: 100%;
+			height: 100%;
+		}
+
+		@media (min-width: 720px) and (min-height: 720px)
+		{
+			#container
+			{
+				width: 720px;
+				height: 720px;
+			}
+		}
+
+		@media (min-width: 980px) and (min-height: 980px)
+		{
+			#container
+			{
+				width: 960px;
+				height: 960px;
+			}
+		}
+
+		.sidebar-left, .sidebar-right
+		{
+			position: absolute;
+			bottom: 0px;
+		}
+
+		.sidebar-left
+		{
+			left: 0px;
+			right: 165px;
+		}
+
+		.sidebar-right
+		{
+			right: 0px;
+			width: 165px;
+			padding: 8px;
+		}
+
+		.sidebar-right .dropup
+		{
+			display: inline-block;
+			padding: 0px 4px;
 		}
 
 		#main_output > .chat, #input
 		{
 			position: absolute;
-			left: 8px;
-			right: 8px;
+			left: 0px;
+			right: 0px;
 		}
 
 		#main_output > .chat
 		{
 			bottom: 24px;
-			height: 124px;
-			width: 676px;
+			height: 120px;
 		}
 
 		#main_output > .chat > .bg
 		{
+			border-top-left-radius: 0px;
 			border-bottom-left-radius: 0px;
 			border-bottom-right-radius: 0px;
 			border-bottom: 0px;
+			border-left: 0px;
 		}
 
 		#input
 		{
 			bottom: 0px;
 			height: 24px;
-			right: 430px;
-			width: 678px;
+			left: 0px;
 		}
 
 		#input:before
@@ -80,9 +129,8 @@
 			right: 0px;
 
 			border: 1px solid #DCDCDC;
-			border-radius: 6px;
-			border-top-left-radius: 0px;
-			border-top-right-radius: 0px;
+			border-left: 0px;
+			border-bottom: 0px;
 			background-color: #292727;
 			opacity: 0.7;
 			filter: alpha(opacity=70);
@@ -104,14 +152,6 @@
 		.byond_input input
 		{
 			color: #F9FCD1;
-		}
-
-		.btn
-		{
-			position: absolute;
-			top: 8px;
-			left: 8px;
-			width: auto;
 		}
 
 		#hud_child
@@ -170,19 +210,19 @@
 			text-align: center;
 			vertical-align: middle;
 		}
-	</style>
-	<script type="text/javascript">
-		waitForJquery(function()
+
+		.btn-game
 		{
-			$(document).ready(function()
-			{
-				$("#mybutton").on("click", function()
-				{
-					byond.fn.topic("test");
-				});
-			});
-		});
-	</script>
+			color: #333;
+			border-color: #333;
+			background-color: #CCC;
+		}
+
+		.btn:focus
+		{
+			outline: 0 !important;
+		}
+	</style>
 </head>
 <body>
 	<table id="wrapper">
@@ -190,13 +230,30 @@
 			<td>
 				<div id="container">
 					<div id="map" byondclass="map"></div>
+					<!--
 					<div id="hud_child" byondclass="child" skinparams="is-visible=true; left=statistics; splitter=100; is-vert=true"></div>
-						<div id="statistics" byondclass="info" style="color: #699BA5;"></div>
-					<div id="main_output" byondclass="chat"></div>
-					<div id="input" byondclass="input" skinparams="is-default=true;command=!say &quot;"></div>
-					<button type="button" class="btn btn-primary" id="mybutton">Button!</button>
+					<div id="statistics" byondclass="info" style="color: #699BA5;"></div>
+					-->
+					<div class="sidebar-left">
+						<div id="main_output" byondclass="chat"></div>
+						<div id="input" byondclass="input" skinparams="is-default=true;command=!say &quot;"></div>
+					</div>
+					<div class="sidebar-right">
+						<button type="button" class="btn btn-sm btn-game" title="Show stats"><i class="fa fa-user"></i></button>
+						<button type="button" class="btn btn-sm btn-game" title="Show inventory"><i class="fa fa-suitcase"></i></button>
+						<button type="button" class="btn btn-sm btn-game" title="Show who's online"><i class="fa fa-users"></i></button>
+						<div class="dropup">
+							<button type="button" class="btn btn-sm btn-game" title="Show menu" data-toggle="dropdown"><i class="fa fa-cog"></i></button>
+							<ul class="dropdown-menu">
+								<li><a>View changelog</a></li>
+								<li><a>Show who's online</a></li>
+								<li><a>Report a bug...</a></li>
+								<li><a>Logout</a></li>
+							</ul>
+						</div>
+					</div>
 
-					<div id="playerinfo" byondclass="playerinfo"></div>
+					<!--<div id="playerinfo" byondclass="playerinfo"></div>-->
 				</div>
 			</td>
 		</tr>

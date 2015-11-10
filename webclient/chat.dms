@@ -18,7 +18,7 @@
 			z-index: 1;
 			border: 1px solid #DCDCDC;
 			border-radius: 6px;
-			width: 676px;
+			width: 100%;
 		}
 
 		.chat > .output
@@ -57,31 +57,32 @@
 			{
 				output: function(obj)
 				{
-					try
+					var srcElem				= this.elem;
+
+					waitForJquery(function()
 					{
 						var name			= obj.list[0]["text"];
 						var type			= obj.list[1]["text"];
 						var message			= obj.list[2]["text"];
 
-						var elem			= jQuery("<p></p>"); // not to be confused with this.elem
+						var elem			= $("<p></p>"); // not to be confused with this.elem
 
 						elem.append($("<span class=\"name\"></span>").text(name));
 						elem.append($("<span></span>").text(" " + type + ", \""));
 						elem.append($("<span class=\"message\"></span>").text(message));
 						elem.append($("<span></span>").text("\""));
 
-						var outputElem		= jQuery(this.elem).find(".output");
-						var canScroll		= (outputElem.outerHeight() + outputElem[0].scrollTop) >= (outputElem[0].scrollHeight - 8);
+						var outputElem		= $(srcElem).find(".output");
 
-						outputElem.append(elem);
+						if (outputElem.length)
+						{
+							var canScroll	= (outputElem.outerHeight() + outputElem.scrollTop()) >= (outputElem[0].scrollHeight - 8);
 
-						if (canScroll)		{ outputElem.scrollTop(outputElem[0].scrollHeight); }
-					}
-					catch (ex)
-					{
-						// TODO: Send message back to the server.
-						console.log(ex);
-					}
+							outputElem.append(elem);
+
+							if (canScroll)	{ outputElem.scrollTop(outputElem[0].scrollHeight); }
+						}
+					});
 				}
 			}
 		}

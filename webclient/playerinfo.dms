@@ -15,9 +15,12 @@
 				{
 					try
 					{
-						var name			= obj.list[0]["text"];
+						waitForJquery(function()
+						{
+							var name			= obj.list[0]["text"];
 
-						$(this.elem).find(".player_name").text(name);
+							$(this.elem).find(".player_name").text(name);
+						});
 					}
 					catch (ex)
 					{

@@ -3,10 +3,6 @@
 // END_INTERNALS
 // BEGIN_FILE_DIR
 #define FILE_DIR .
-#define FILE_DIR "icon"
-#define FILE_DIR "icon/map_screens"
-#define FILE_DIR "icon/mob"
-#define FILE_DIR "icon/turf"
 // END_FILE_DIR
 // BEGIN_PREFERENCES
 #define DEBUG
@@ -35,4 +31,5 @@
 #include "webclient\chat.dms"
 #include "webclient\playerinfo.dms"
 #include "webclient\resources\bootstrap_do_not_open_in_dm.dms"
+#include "webclient\resources\fontawesome_do_not_open_in_dm.dms"
 // END_INCLUDE
