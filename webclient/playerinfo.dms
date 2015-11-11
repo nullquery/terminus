@@ -1,9 +1,37 @@
-<byondclass name="playerinfo">
+<byondclass name="player">
 	<style>
 
 	.panel-default
 	{
 		border-color: #9B9B9B;
+	}
+
+	.panel-title
+	{
+		height: 15px;
+		font-size: 15px;
+	}
+
+	.panel > .panel-heading
+	{
+		background-color: gray;
+		border-color: #9B9B9B;
+		color: #C5EFE1;
+		font-style: italic;
+		padding: 5px;
+	}
+
+	.panel > .panel-body
+	{
+		color: #86CBCB;
+		background-color: #3B3A3A;
+		padding: 1px;
+	}
+
+	.panel > .panel-body p
+	{
+		margin: 2px 0px;
+		font-size: 11px;
 	}
 
 	</style>
@@ -19,7 +47,7 @@
 						{
 							var name			= obj.list[0]["text"];
 
-							$(this.elem).find(".player_name").text(name);
+							$(".panel-body").find(".player_name").text(name);
 						});
 					}
 					catch (ex)

@@ -1,0 +1,99 @@
+<byondclass name="onlineplayers">
+	<style>
+
+	.panel-default
+	{
+		border-color: #9B9B9B;
+		height: 9px;
+	}
+
+	.panel-title
+	{
+		height: 15px;
+		font-size: 15px;
+	}
+
+	.panel > .panel-heading
+	{
+		background-color: gray;
+		border-color: #9B9B9B;
+		color: #C5EFE1;
+		font-style: italic;
+		padding: 5px;
+	}
+
+	.players_output
+	{
+		position: relative;
+		z-index: 1;
+	}
+
+	.players_output > .who_output
+	{
+		position: relative;
+		z-index: 3;
+		color: #86CBCB;
+		background-color: #BCBABA;
+		padding: 1px;
+		height: 185px;
+		overflow: auto;
+		overflow-x: hidden;
+	}
+
+	.players_output > .who_output p
+	{
+		margin: 2px 0px;
+		font-size: 11px;
+	}
+
+	</style>
+	<script>
+		{
+			fn:
+			{
+				output: function(obj)
+				{
+					try
+					{
+
+						waitForJquery(function()
+						{
+
+							var name			= obj.list[0]["text"];
+
+							var elem			= $("<p></p>"); // not to be confused with this.elem
+
+							elem.append($("<span class=\"name\"></span>").text(name));
+
+							var outputElem		= $(".players_output").find(".who_output");
+
+							if (outputElem.length)
+							{
+								var canScroll	= (outputElem.outerHeight() + outputElem.scrollTop()) >= (outputElem[0].scrollHeight - 8);
+
+								outputElem.append(elem);
+
+								if (canScroll)	{ outputElem.scrollTop(outputElem[0].scrollHeight); }
+							}
+							});
+					}
+					catch (ex)
+					{
+						// TODO: Send message back to the server.
+						console.log(ex);
+					}
+				}
+			}
+		}
+	</script>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">
+				<p>Player's Online</p>
+			</h3>
+		</div>
+	</div>
+	<div class="players_output">
+		<div class="who_output"></div>
+	</div>
+</byondclass>

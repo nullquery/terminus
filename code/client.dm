@@ -43,6 +43,10 @@
 {
 	src << output(list("[name]", "[type]", "[message]"), "main_output");
 }
+/client/proc/WhoseOnline(name)
+{
+	src << output(list("[name]"), "players_online");
+}
 
 /*
 /client/verb/switch_view()

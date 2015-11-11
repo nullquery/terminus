@@ -12,7 +12,7 @@
 	{
 		src.r_name = src.key
 
-		src << output(list("[src.r_name]"), "playerinfo");
+		spawn(10)src << output(list("[src.r_name]"), "playerinfo");
 
 		if (src.chunk)									{ src.chunk.Login(src); }
 

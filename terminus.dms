@@ -28,7 +28,145 @@
 				}
 			});
 		});
+
+		function closeBlankContainer()
+		{
+			waitForJquery(function()
+			{
+				try
+				{
+
+					$(".blank_container").toggle();
+					$(".byond_player").toggle();
+					$(".byond_inventory").toggle();
+					$(".byond_onlineplayers").toggle();
+				}
+				catch (ex)
+				{
+					console.log(ex);
+				}
+			});
+		}
+
+		closeBlankContainer();
+
 	</script>
+
+	<script type="text/javascript">
+
+		waitForJquery(function()
+		{
+			$(document).ready(function()
+			{
+				$("#statbutton").on("click", function()
+				{
+					if($("#playerinfo").css("display") == "none")
+					{
+						if($("#blankcontainer").css("display") != "none")
+						{
+							$(".byond_inventory").hide();
+							$(".byond_onlineplayers").hide();
+							$(".byond_player").toggle( "fast", function(){
+
+							});
+						}else if($("#blankcontainer").css("display") == "none")
+						{
+							$(".blank_container").toggle( "fast", function(){
+
+							});
+							$(".byond_player").toggle( "fast", function(){
+
+							});
+						}
+					}else if($("#playerinfo").css("display") != "none")
+					{
+						$(".byond_inventory").hide();
+						$(".byond_onlineplayers").hide();
+						$(".byond_player").toggle( "fast", function(){
+
+						});
+						$(".blank_container").hide();
+					}
+				});
+			});
+		});
+
+
+		waitForJquery(function()
+		{
+			$(document).ready(function()
+			{
+				$("#inventory").on("click", function()
+				{
+					if($("#player_inventory").css("display") == "none")
+					{
+						if($("#blankcontainer").css("display") != "none")
+						{
+							$(".byond_player").hide();
+							$(".byond_onlineplayers").hide();
+							$(".byond_inventory").toggle( "fast", function(){
+
+							});
+						}else if($("#blankcontainer").css("display") == "none")
+						{
+							$(".blank_container").toggle( "fast", function(){
+
+							});
+							$(".byond_inventory").toggle( "fast", function(){
+
+							});
+						}
+					}else if($("#player_inventory").css("display") != "none")
+					{
+						$(".byond_player").hide();
+						$(".byond_onlineplayers").hide();
+						$(".byond_inventory").toggle( "fast", function(){
+
+						});
+						$(".blank_container").hide();
+					}
+				});
+			});
+		});
+
+		waitForJquery(function()
+		{
+			$(document).ready(function()
+			{
+				$("#whose_online").on("click", function()
+				{
+					if($("#players_online").css("display") == "none")
+					{
+						if($("#blankcontainer").css("display") != "none")
+						{
+							$(".byond_player").hide();
+							$(".byond_inventory").hide();
+							$(".byond_onlineplayers").toggle( "fast", function(){
+
+							});
+						}else if($("#blankcontainer").css("display") == "none")
+						{
+							$(".blank_container").toggle( "fast", function(){
+
+							});
+							$(".byond_onlineplayers").toggle( "fast", function(){
+
+							});
+						}
+					}else if($("#players_online").css("display") != "none")
+					{
+						$(".byond_player").hide();
+						$(".byond_inventory").hide();
+						$(".byond_onlineplayers").toggle( "fast", function(){
+
+						});
+						$(".blank_container").hide();
+					}
+				});
+			});
+		});
+	</script>
+
 	<style>
 		#container
 		{
@@ -165,39 +303,6 @@
 			z-index: 1;
 		}
 
-		#playerinfo
-		{
-			position: absolute;
-			bottom: 0px;
-			right: 0px;
-			height: 200px;
-			width: 293px;
-			top: 1px;
-			background-color: #292727;
-			z-index: 1;
-		}
-
-		#playerinfo > .panel > .panel-heading
-		{
-			background-color: gray;
-			border-color: #9B9B9B;
-			color: #C5EFE1;
-			font-style: italic;
-			padding: 5px;
-		}
-
-		#playerinfo > .panel > .panel-body
-		{
-			color: #86CBCB;
-			background-color: #3B3A3A;
-			padding: 1px;
-		}
-
-		#playerinfo > .panel > .panel-body p
-		{
-			margin: 2px 0px;
-		}
-
 		#wrapper
 		{
 			width: 100%;
@@ -222,6 +327,47 @@
 		{
 			outline: 0 !important;
 		}
+
+		.blank_container
+		{
+			position: absolute;
+			background-color: #CCC;
+			padding: 1px;
+			border-color: black;
+			width: 160px;
+			height: 215px;
+			bottom: 45px;
+			right: 3px;
+
+		}
+
+		.byond_player
+		{
+			position: relative;
+			width: 100%;
+			height: 100%;
+			background-color: #292727;
+			z-index: 1;
+		}
+
+		.byond_inventory
+		{
+			position: relative;
+			width: 100%;
+			height: 100%;
+			background-color: gray;
+			z-index: 1;
+		}
+
+		.byond_onlineplayers
+		{
+			position: relative;
+			width: 100%;
+			height: 100%;
+			background-color: #292727;
+			z-index: 1;
+		}
+
 	</style>
 </head>
 <body>
@@ -239,9 +385,9 @@
 						<div id="input" byondclass="input" skinparams="is-default=true;command=!say &quot;"></div>
 					</div>
 					<div class="sidebar-right">
-						<button type="button" class="btn btn-sm btn-game" title="Show stats"><i class="fa fa-user"></i></button>
-						<button type="button" class="btn btn-sm btn-game" title="Show inventory"><i class="fa fa-suitcase"></i></button>
-						<button type="button" class="btn btn-sm btn-game" title="Show who's online"><i class="fa fa-users"></i></button>
+						<button type="button" id="statbutton" class="btn btn-sm btn-game" title="Show stats"><i class="fa fa-user"></i></button>
+						<button type="button" id="inventory" class="btn btn-sm btn-game" title="Show inventory"><i class="fa fa-suitcase"></i></button>
+						<button type="button" id="whose_online" class="btn btn-sm btn-game" title="Show who's online"><i class="fa fa-users"></i></button>
 						<div class="dropup">
 							<button type="button" class="btn btn-sm btn-game" title="Show menu" data-toggle="dropdown"><i class="fa fa-cog"></i></button>
 							<ul class="dropdown-menu">
@@ -253,7 +399,11 @@
 						</div>
 					</div>
 
-					<!--<div id="playerinfo" byondclass="playerinfo"></div>-->
+					<div id="blankcontainer" class="blank_container">
+						<div id="playerinfo" byondclass="player"></div>
+						<div id="player_inventory" byondclass="inventory"></div>
+						<div id="players_online" byondclass="onlineplayers"></div>
+					</div>
 				</div>
 			</td>
 		</tr>
