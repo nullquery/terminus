@@ -1,0 +1,81 @@
+<style>
+	.window
+	{
+		border: 1px solid #DCDCDC;
+		position: absolute;
+		top: 50px;
+		left: 50px;
+	}
+
+	.window > .titlebar
+	{
+		background-color: #444;
+		color: #FFF;
+		padding: 4px;
+		cursor: move;
+	}
+
+	.window > .content
+	{
+		background-color: #EFEFEF;
+		min-height: 40px;
+	}
+</style>
+<script>
+	var windows = {};
+	waitForJquery(function()
+	{
+		var TWindow = function(title, x, y)
+		{
+			this.elem				= $("<div class=\"window\" style=\"display: none;\"></div>");
+			this.elem.css({ "left": x + "px", "top": y + "px" });
+
+			this.elem.append("<div class=\"titlebar\"><span class=\"title\"></span></div>");
+			this.elem.append("<div class=\"content\"></div>");
+
+			var twindow				= this;
+			this.dragging			= false;
+			this.dragX				= -1;
+			this.dragY				= -1;
+
+			this.elem.find(".titlebar").on("mousedown", function(e)
+			{
+				twindow.dragging	= true;
+				twindow.dragX		= e.clientX;
+				twindow.dragY		= e.clientY;
+			});
+
+			$(document).on("mouseup", function(e)
+			{
+				twindow.dragging	= false;
+			});
+
+			$(document).on("mousemove", function(e)
+			{
+				if (twindow.dragging)
+				{
+					twindow.elem.css({ "top": e.clientY + "px", "left": e.clientX + "px" });
+				}
+			});
+
+			$("#skin").append(this.elem);
+
+			this.setTitle(title);
+		}
+
+		TWindow.prototype.setTitle = function(title)
+		{
+			this.elem.find(".titlebar > .title").text(title);
+		}
+
+		TWindow.prototype.show = function()
+		{
+			this.elem.show();
+		}
+
+		windows.create = function(title, x, y)
+		{
+			return new TWindow(title || "Untitled window", x, y);
+		}
+	});
+</script>

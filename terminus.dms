@@ -50,6 +50,14 @@
 
 		closeBlankContainer();
 
+		waitForJquery(function()
+		{
+			$(document).ready(function()
+			{
+				var wnd = windows.create("Test");
+				wnd.show();
+			});
+		});
 	</script>
 
 	<script type="text/javascript">
@@ -168,6 +176,15 @@
 	</script>
 
 	<style>
+		#skin
+		{
+			-webkit-user-select: none;
+			   -moz-user-select: none;
+			    -ms-user-select: none;
+			        user-select: none;
+			cursor: default;
+		}
+
 		#container
 		{
 			position: relative;
