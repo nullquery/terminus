@@ -54,7 +54,7 @@
 		{
 			$(document).ready(function()
 			{
-				var wnd = windows.create("Test");
+				var wnd = windows.create({ title: "Test" });
 				wnd.show();
 			});
 		});

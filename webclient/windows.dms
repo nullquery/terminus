@@ -1,10 +1,11 @@
 <style>
 	.window
 	{
-		border: 1px solid #DCDCDC;
+		border: 1px solid #888;
 		position: absolute;
 		top: 50px;
 		left: 50px;
+		z-index: 10;
 	}
 
 	.window > .titlebar
@@ -12,55 +13,170 @@
 		background-color: #444;
 		color: #FFF;
 		padding: 4px;
-		cursor: move;
 	}
 
 	.window > .content
 	{
 		background-color: #EFEFEF;
-		min-height: 40px;
+		position: absolute;
+		top: 24px;
+		left: 0px;
+		right: 0px;
+		bottom: 0px;
+		overflow: auto;
 	}
+
+	.window .resize-grip
+	{
+		position: absolute;
+		z-index: 2;
+		border: 1px dashed #888;
+		display: none;
+	}
+
+	.window .resize-grip.s, .window .resize-grip.sw, .window .resize-grip.se	{ bottom: -2px; }
+	.window .resize-grip.n, .window .resize-grip.nw, .window .resize-grip.ne	{ top: -2px; }
+	.window .resize-grip.e, .window .resize-grip.ne, .window .resize-grip.se	{ right: -2px; }
+	.window .resize-grip.w, .window .resize-grip.nw, .window .resize-grip.sw	{ left: -2px; }
+
+	.window .resize-grip.n, .window .resize-grip.s								{ left: 0px; right: 0px; }
+	.window .resize-grip.e, .window .resize-grip.w								{ top: 0px; bottom: 0px; }
+
+	.window .resize-grip.n, .window .resize-grip.s								{ cursor: ns-resize; height: 2px; }
+	.window .resize-grip.e, .window .resize-grip.w								{ cursor: ew-resize; width: 2px; }
+	.window .resize-grip.ne, .window .resize-grip.sw							{ cursor: nesw-resize; width: 2px; height: 2px; }
+	.window .resize-grip.nw, .window .resize-grip.se							{ cursor: nwse-resize; width: 2px; height: 2px; }
 </style>
 <script>
 	var windows = {};
 	waitForJquery(function()
 	{
-		var TWindow = function(title, x, y)
+		var TWindow = function(options)
 		{
-			this.elem				= $("<div class=\"window\" style=\"display: none;\"></div>");
-			this.elem.css({ "left": x + "px", "top": y + "px" });
+			this.elem					= $("<div class=\"window\" style=\"display: none;\"></div>");
+			this.elem.css({
+				"left": options["x"] + "px",
+				"top": options["y"] + "px",
+				"width": options["width"] + "px",
+				"height": options["height"] + "px",
+				"min-width": options["minWidth"] + "px",
+				"min-height": options["minHeight"] + "px",
+				"max-width": options["maxWidth"] + "px",
+				"max-height": options["maxHeight"] + "px"
+			});
 
 			this.elem.append("<div class=\"titlebar\"><span class=\"title\"></span></div>");
 			this.elem.append("<div class=\"content\"></div>");
 
-			var twindow				= this;
-			this.dragging			= false;
-			this.dragX				= -1;
-			this.dragY				= -1;
+			var directions = ["nw", "ne", "sw", "se", "n", "e", "s", "w"]
+			for (var i in directions)
+			{
+				this.elem.append("<div class=\"resize-grip " + directions[i] + "\"></div>");
+			}
+
+			this.draggable				= false;
+			this.resizable				= false;
+
+			var twindow					= this;
+			this.dragging				= false;
+			this.dragX					= -1;
+			this.dragY					= -1;
+			this.resizing				= false;
+			this.resizeX				= -1;
+			this.resizeY				= -1;
+			this.resizeStyle			= null;
+			this.resizeTop				= false;
+			this.resizeLeft				= false;
+			this.resizeDisableHoriz		= false;
+			this.resizeDisableVert		= false;
 
 			this.elem.find(".titlebar").on("mousedown", function(e)
 			{
-				twindow.dragging	= true;
-				twindow.dragX		= e.clientX;
-				twindow.dragY		= e.clientY;
+				if (twindow.draggable)
+				{
+					var position		= twindow.elem.position();
+					twindow.dragX		= e.clientX - position.left;
+					twindow.dragY		= e.clientY - position.top;
+
+					twindow.dragging	= true;
+					$("#skin").css("cursor", "move");
+				}
+			});
+
+			this.elem.find(".resize-grip").on("mousedown", function(e)
+			{
+				if (twindow.resizable)
+				{
+					var position				= twindow.elem.position();
+
+					twindow.resizeX				= e.clientX;
+					twindow.resizeY				= e.clientY;
+
+					twindow.resizeStyle			= { "top": position.top, "left": position.left, "width": twindow.elem.outerWidth(), "height": twindow.elem.outerHeight() };
+
+					twindow.resizeTop			= $(this).is(".n, .ne, .nw");
+					twindow.resizeLeft			= $(this).is(".w, .nw, .sw");
+					twindow.resizeDisableHoriz	= $(this).is(".n, .s");
+					twindow.resizeDisableVert	= $(this).is(".e, .w");
+
+					twindow.resizing			= true;
+					$("#skin").css("cursor", $(this).css("cursor"));
+				}
 			});
 
 			$(document).on("mouseup", function(e)
 			{
-				twindow.dragging	= false;
+				if (twindow.dragging || twindow.resizing)
+				{
+					$("#skin").css("cursor", "");
+				}
+
+				if (twindow.dragging)			{ twindow.dragging = false; }
+				if (twindow.resizing)			{ twindow.resizing = false; }
 			});
 
 			$(document).on("mousemove", function(e)
 			{
-				if (twindow.dragging)
+				if (twindow.draggable && twindow.dragging)
 				{
-					twindow.elem.css({ "top": e.clientY + "px", "left": e.clientX + "px" });
+					twindow.elem.css({ "left": (e.clientX - twindow.dragX) + "px", "top": (e.clientY - twindow.dragY) + "px" });
+				}
+
+				if (twindow.resizable && twindow.resizing)
+				{
+					var offsetX						= e.clientX - twindow.resizeX;
+					var offsetY						= e.clientY - twindow.resizeY;
+					var newLeft						= twindow.resizeStyle["left"];
+					var newTop						= twindow.resizeStyle["top"];
+					var newWidth					= twindow.resizeStyle["width"];
+					var newHeight					= twindow.resizeStyle["height"];
+
+					if (!twindow.resizeDisableHoriz)
+					{
+						if (twindow.resizeLeft)		{ newWidth = newWidth - offsetX; }
+						else						{ newWidth = newWidth + offsetX; }
+					}
+
+					if (!twindow.resizeDisableVert)
+					{
+						if (twindow.resizeTop)		{ newHeight = newHeight - offsetY; }
+						else						{ newHeight = newHeight + offsetY; }
+					}
+
+					twindow.elem.css({ "width": newWidth + "px", "height": newHeight + "px" });
+
+					if (twindow.resizeLeft)			{ newLeft = newLeft - (twindow.elem.width() - twindow.resizeStyle["width"]); }
+					if (twindow.resizeTop)			{ newTop = newTop - (twindow.elem.height() - twindow.resizeStyle["height"]); }
+
+					twindow.elem.css({ "left": newLeft + "px", "top": newTop + "px" });
 				}
 			});
 
 			$("#skin").append(this.elem);
 
-			this.setTitle(title);
+			this.setTitle(options["title"]);
+			this.setDraggable(options["draggable"]);
+			this.setResizable(options["resizable"]);
 		}
 
 		TWindow.prototype.setTitle = function(title)
@@ -68,14 +184,41 @@
 			this.elem.find(".titlebar > .title").text(title);
 		}
 
+		TWindow.prototype.setDraggable = function(draggable)
+		{
+			this.draggable				= draggable;
+
+			this.elem.find(".titlebar").css("cursor", (draggable ? "move" : ""));
+		}
+
+		TWindow.prototype.setResizable = function(resizable)
+		{
+			this.resizable				= resizable;
+
+			if (resizable)				{ this.elem.find(".resize-grip").show(); }
+			else						{ this.elem.find(".resize-grip").hide(); }
+		}
+
 		TWindow.prototype.show = function()
 		{
 			this.elem.show();
 		}
 
-		windows.create = function(title, x, y)
+		windows.create = function(options)
 		{
-			return new TWindow(title || "Untitled window", x, y);
+			return new TWindow($.extend({
+				title: "Untitled window",
+				x: 50,
+				y: 50,
+				width: 200,
+				height: 200,
+				minWidth: 50,
+				minHeight: 50,
+				maxWidth: 600,
+				maxHeight: 600,
+				draggable: true,
+				resizable: true
+			}, options));
 		}
 	});
 </script>
