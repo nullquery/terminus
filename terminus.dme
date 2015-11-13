@@ -33,6 +33,4 @@
 #include "webclient\playerinfo.dms"
 #include "webclient\players_online.dms"
 #include "webclient\windows.dms"
-#include "webclient\resources\bootstrap_do_not_open_in_dm.dms"
-#include "webclient\resources\fontawesome_do_not_open_in_dm.dms"
 // END_INCLUDE
