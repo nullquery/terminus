@@ -204,6 +204,21 @@
 			this.elem.show();
 		}
 
+		TWindow.prototype.hide = function()
+		{
+			this.elem.hide();
+		}
+
+		TWindow.prototype.isVisible = function()
+		{
+			return this.elem.is(":visible");
+		}
+
+		TWindow.prototype.getContentElement = function()
+		{
+			return this.elem.find("> .content");
+		}
+
 		windows.create = function(options)
 		{
 			return new TWindow($.extend({
