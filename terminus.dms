@@ -97,6 +97,17 @@
 			});
 		});
 
+		waitForJquery(function()
+		{
+			$(document).ready(function()
+			{
+				$(".logout_button").on("click", function()
+				{
+					byond.fn.topic("Logout");
+				});
+			});
+		});
+
 
 		waitForJquery(function()
 		{
@@ -108,7 +119,6 @@
 					{
 						if($("#blankcontainer").css("display") != "none")
 						{
-							$(".byond_player").hide();
 							$(".byond_onlineplayers").hide();
 							$(".byond_inventory").toggle( "fast", function(){
 
@@ -124,7 +134,6 @@
 						}
 					}else if($("#player_inventory").css("display") != "none")
 					{
-						$(".byond_player").hide();
 						$(".byond_onlineplayers").hide();
 						$(".byond_inventory").toggle( "fast", function(){
 
@@ -145,7 +154,6 @@
 					{
 						if($("#blankcontainer").css("display") != "none")
 						{
-							$(".byond_player").hide();
 							$(".byond_inventory").hide();
 							$(".byond_onlineplayers").toggle( "fast", function(){
 
@@ -161,7 +169,6 @@
 						}
 					}else if($("#players_online").css("display") != "none")
 					{
-						$(".byond_player").hide();
 						$(".byond_inventory").hide();
 						$(".byond_onlineplayers").toggle( "fast", function(){
 
@@ -409,7 +416,7 @@
 								<li><a>View changelog</a></li>
 								<li><a>Show who's online</a></li>
 								<li><a>Report a bug...</a></li>
-								<li><a>Logout</a></li>
+								<li><a class="logout_button">Logout</a></li>
 							</ul>
 						</div>
 					</div>

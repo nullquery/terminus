@@ -41,6 +41,11 @@
 		{
 			mob << output(list("[mob.r_name]"), "playerinfo");
 		}
+
+		if (href == "Logout")
+		{
+			mob.Logout();
+		}
 	}
 }
 
