@@ -36,6 +36,11 @@
 		{
 			world.log << "Cool."
 		}
+
+		if (href == "get_player_info")
+		{
+			mob << output(list("[mob.r_name]"), "playerinfo");
+		}
 	}
 }
 

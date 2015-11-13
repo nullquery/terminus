@@ -37,7 +37,6 @@
 				{
 
 					$(".blank_container").toggle();
-					$(".byond_player").toggle();
 					$(".byond_inventory").toggle();
 					$(".byond_onlineplayers").toggle();
 				}
@@ -56,8 +55,26 @@
 			{
 				var wnd = windows.create({ title: "Test" });
 				wnd.show();
+
+				var wndtwo = windows.create({ title: "Test Two", x: 1000 });
+				wndtwo.show();
 			});
 		});
+
+		waitForJquery(function() // Searches through all created windows and grabs first one created (in this case, the window titled Test)
+		{
+			$(document).ready(function()
+			{
+				var x = document.getElementsByClassName("window");
+				var contentElement					= $(x[0]).find(".content");
+				var titleElement					= $(x[0]).find(".titlebar > .title");
+				titleElement.text("Character Information");
+				contentElement.append("<div id=\"playerinfo\"></div>");
+				byond.skin.attach("playerinfo",byondclass="player");
+
+			});
+		});
+
 	</script>
 
 	<script type="text/javascript">
@@ -68,33 +85,11 @@
 			{
 				$("#statbutton").on("click", function()
 				{
-					if($("#playerinfo").css("display") == "none")
-					{
-						if($("#blankcontainer").css("display") != "none")
-						{
-							$(".byond_inventory").hide();
-							$(".byond_onlineplayers").hide();
-							$(".byond_player").toggle( "fast", function(){
+					byond.fn.topic("get_player_info");
+					var x = document.getElementsByClassName("window");
+					$(x[0]).toggle( "fast", function(){
 
-							});
-						}else if($("#blankcontainer").css("display") == "none")
-						{
-							$(".blank_container").toggle( "fast", function(){
-
-							});
-							$(".byond_player").toggle( "fast", function(){
-
-							});
-						}
-					}else if($("#playerinfo").css("display") != "none")
-					{
-						$(".byond_inventory").hide();
-						$(".byond_onlineplayers").hide();
-						$(".byond_player").toggle( "fast", function(){
-
-						});
-						$(".blank_container").hide();
-					}
+					});
 				});
 			});
 		});
@@ -417,7 +412,6 @@
 					</div>
 
 					<div id="blankcontainer" class="blank_container">
-						<div id="playerinfo" byondclass="player"></div>
 						<div id="player_inventory" byondclass="inventory"></div>
 						<div id="players_online" byondclass="onlineplayers"></div>
 					</div>
