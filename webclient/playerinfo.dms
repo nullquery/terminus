@@ -1,4 +1,4 @@
-<byondclass name="player">
+<byondclass name="playerinfo">
 	<style>
 
 	.panel-default
@@ -24,6 +24,15 @@
 		{
 			fn:
 			{
+				create: function()
+				{
+					var control					= this;
+
+					waitForJquery(function()
+					{
+						sendTopic({ "control": control.id, "class": "playerinfo" });
+					});
+				},
 				output: function(obj)
 				{
 					try
@@ -38,7 +47,7 @@
 					catch (ex)
 					{
 						// TODO: Send message back to the server.
-						console.log(ex);
+						logException(ex);
 					}
 				}
 			}

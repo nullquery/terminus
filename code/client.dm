@@ -29,6 +29,7 @@
 
 /client/Topic(href, href_list[], hsrc)
 {
+	world.log << href
 	if (hsrc)					{ return ..() }
 	else
 	{

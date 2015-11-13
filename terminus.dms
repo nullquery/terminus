@@ -4,6 +4,42 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX" crossorigin="anonymous" />
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
 	<script>
+		function logException(ex)
+		{
+			try
+			{
+				console.log(ex);
+			}
+			catch (ex)
+			{
+				alert("ERROR: " + ex.message);
+
+			}
+		}
+
+		function sendTopic(topic)
+		{
+			if (typeof(topic) == "object")
+			{
+				var params				= topic;
+
+				topic					= "";
+				var first				= true;
+
+				for (var key in params)
+				{
+					if (!first)
+					{
+						topic			= topic + "&";
+					}
+					topic				= topic + key + "=" + encodeURIComponent(params[key])
+					first				= false;
+
+				}
+			}
+			byond.fn.topic(topic);
+		}
+
 		function waitForJquery(callback)
 		{
 			try
@@ -11,7 +47,7 @@
 				jQuery();
 
 				try			{ callback(); }
-				catch (ex)	{ alert(ex.message); }
+				catch (ex)	{ logException(ex); }
 			}
 			catch (ex)		{ setTimeout(waitForJquery.bind(null, callback), 10); }
 		}
@@ -26,8 +62,7 @@
 				}
 				catch (ex)
 				{
-					// TODO: Log on the server-side.
-					alert("ERROR: " + ex.message);
+					logException(ex);
 				}
 			});
 		});
@@ -45,7 +80,7 @@
 				}
 				catch (ex)
 				{
-					console.log(ex);
+					logException(ex);
 				}
 			});
 		}
@@ -56,25 +91,8 @@
 		{
 			$(document).ready(function()
 			{
-				var wnd = windows.create({ title: "Test" });
-				wnd.show();
-
 				var wndtwo = windows.create({ title: "Test Two", x: 1000 });
 				wndtwo.show();
-			});
-		});
-
-		waitForJquery(function() // Searches through all created windows and grabs first one created (in this case, the window titled Test)
-		{
-			$(document).ready(function()
-			{
-				var x = document.getElementsByClassName("window");
-				var contentElement					= $(x[0]).find(".content");
-				var titleElement					= $(x[0]).find(".titlebar > .title");
-				titleElement.text("Character Information");
-				contentElement.append("<div id=\"playerinfo\"></div>");
-				byond.skin.attach("playerinfo",byondclass="player");
-
 			});
 		});
 
@@ -86,13 +104,31 @@
 		{
 			$(document).ready(function()
 			{
+				var statWindow;
+
 				$("#statbutton").on("click", function()
 				{
-					byond.fn.topic("get_player_info");
-					var x = document.getElementsByClassName("window");
-					$(x[0]).toggle( "fast", function(){
+					if (statWindow)
+					{
+						if (!statWindow.isVisible())
+						{
+							statWindow.show();
 
-					});
+						}
+						else								{ statWindow.hide(); }
+					}
+					else
+					{
+						statWindow							= windows.create({ title: "Character Information" });
+
+						var contentElement					= statWindow.getContentElement();
+						var divElem							= $("<div></div>");
+						contentElement.append(divElem);
+
+						byond.skin.attach(divElem[0], "playerinfo");
+
+						statWindow.show();
+					}
 				});
 			});
 		});
