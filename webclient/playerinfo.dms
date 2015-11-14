@@ -30,7 +30,7 @@
 
 					waitForJquery(function()
 					{
-						sendTopic({ "control": control.id, "class": "playerinfo" });
+						sendTopic({ "control": control.id, "class": "playerinfo", "action": "update" });
 					});
 				},
 				output: function(obj)

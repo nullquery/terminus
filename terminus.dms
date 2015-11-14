@@ -28,15 +28,14 @@
 
 				for (var key in params)
 				{
-					if (!first)
-					{
-						topic			= topic + "&";
-					}
-					topic				= topic + key + "=" + encodeURIComponent(params[key])
-					first				= false;
+					if (!first)			{ topic = topic + "&"; }
 
+					topic				= topic + key + "=" + encodeURIComponent(params[key]);
+
+					first				= false;
 				}
 			}
+
 			byond.fn.topic(topic);
 		}
 
