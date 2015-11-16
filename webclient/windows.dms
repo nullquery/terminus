@@ -48,6 +48,7 @@
 	.window .resize-grip.nw, .window .resize-grip.se							{ cursor: nwse-resize; width: 2px; height: 2px; }
 </style>
 <script>
+	var windows = {};
 	waitForJquery(function()
 	{
 		var TWindow = function(options)
