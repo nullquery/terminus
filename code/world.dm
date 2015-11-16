@@ -1,3 +1,5 @@
+var/pgsql4dm/Connection/database_connection = new("postgresql://terminus_dev:ruzecrU4@h.nullquery.net:5432/terminus_dev");
+
 /world
 {
 	name			= "Terminus";
@@ -13,6 +15,9 @@
 
 /world/New()
 {
+	var/pgsql4dm/Changelog/changelog = new(database_connection, "sql/changelog.xml");
+	changelog.Process();
+
 	. = ..();
 
 	spawn			{ TerminusLibrary.Start(); }

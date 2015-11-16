@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<changelog xmlns="http://files.byondhome.com/NullQuery/schemas/changelog.xsd">
+	<include relativeToChangelogFile="true" file="changelogs/1.0.xml" />
+</changelog>

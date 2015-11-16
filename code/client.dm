@@ -33,6 +33,21 @@
 	if (hsrc)					{ return ..() }
 	else
 	{
+		switch (href_list["class"])
+		{
+			if ("playerinfo")
+			{
+				var/id			= href_list["control"];
+
+				switch (href_list["action"])
+				{
+					if("update")
+					{
+						if (mob){ src << output(list("[mob.r_name]"), id); }
+					}
+				}
+			}
+		}
 		if (href == "test")
 		{
 			world.log << "Cool."
