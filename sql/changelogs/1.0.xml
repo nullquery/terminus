@@ -17,4 +17,155 @@
 			);
 		</sql>
 	</changeSet>
+
+	<changeSet id="2" author="nullquery">
+		<sql>
+			CREATE TABLE appearances
+			(
+				id bigserial NOT NULL,
+				type character varying(20) NOT NULL,
+				name character varying(30) NOT NULL,
+				icon_state character varying(20),
+				gender character varying(1),
+				CONSTRAINT appearances_pkey PRIMARY KEY (id)
+			);
+
+			CREATE UNIQUE INDEX appearances_uniq_type_icon_state ON appearances ((LOWER(type)), (COALESCE(icon_state, '')));
+
+			INSERT INTO appearances (type, name, icon_state, gender) VALUES
+				('hair', 'Short hair', 'a', NULL),
+				('hair', 'Cut hair', 'c', NULL),
+				('hair', 'Shoulder-length hair', 'b', NULL),
+				('hair', 'Long hair', 'vlong', NULL),
+				('hair', 'Very long hair', 'longest', NULL),
+				('hair', 'Long fringe', 'longfringe', NULL),
+				('hair', 'Longer fringe', 'vlongfringe', NULL),
+				('hair', 'Half-banged hair', 'halfbang', NULL),
+				('hair', 'Half-banged hair alt', 'halfbang_alt', NULL),
+				('hair', 'Ponytail 1', 'ponytail', NULL),
+				('hair', 'Ponytail 2', 'pa', NULL),
+				('hair', 'Ponytail 3', 'ponytail3', NULL),
+				('hair', 'Parted', 'parted', NULL),
+				('hair', 'Pompadour', 'pompadour', 'M'),
+				('hair', 'Quiff', 'quiff', 'M'),
+				('hair', 'Bedhead', 'bedhead', NULL),
+				('hair', 'Bedhead 2', 'bedheadv2', NULL),
+				('hair', 'Bedhead 3', 'bedheadv3', NULL),
+				('hair', 'Beehive', 'beehive', 'F'),
+				('hair', 'Bobcurl', 'bobcurl', 'F'),
+				('hair', 'Bob', 'bobcut', 'F'),
+				('hair', 'Bowl', 'bowlcut', 'M'),
+				('hair', 'Buzzcut', 'buzzcut', 'M'),
+				('hair', 'Crewcut', 'crewcut', 'M'),
+				('hair', 'Combover', 'combover', 'M'),
+				('hair', 'Devil lock', 'devilock', NULL),
+				('hair', 'Dreadlocks', 'dreads', 'M'),
+				('hair', 'Curls', 'curls', NULL),
+				('hair', 'Afro', 'afro', NULL),
+				('hair', 'Afro 2', 'afro2', NULL),
+				('hair', 'Big afro', 'bigafro', 'M'),
+				('hair', 'Flat top', 'sargeant', 'M'),
+				('hair', 'Emo', 'emo', NULL),
+				('hair', 'Flow hair', 'f', NULL),
+				('hair', 'Feather', 'feather', NULL),
+				('hair', 'Hitop', 'hitop', NULL),
+				('hair', 'Mohawk', 'd', 'M'),
+				('hair', 'Adam Jensen hair', 'jensen', 'M'),
+				('hair', 'Gelled back', 'gelled', 'F'),
+				('hair', 'Spikey', 'spikey', 'M'),
+				('hair', 'Kusanagi hair', 'kusanagi', NULL),
+				('hair', 'Pigtails', 'kagami', 'F'),
+				('hair', 'Hime cut', 'himecut', 'F'),
+				('hair', 'Floorlength braid', 'braid', 'F'),
+				('hair', 'Odango', 'odango', 'F'),
+				('hair', 'Ombre', 'ombre', 'F'),
+				('hair', 'Updo', 'updo', 'F'),
+				('hair', 'Skinhead', 'skinhead', NULL),
+				('hair', 'Long bangs', 'lbangs', 'F'),
+				('hair', 'Balding hair', 'e', 'M'),
+				('hair', 'Bald', NULL, 'M');
+
+			INSERT INTO appearances (type, name, icon_state, gender) VALUES
+				('facial', 'Shaved', NULL, NULL),
+				('facial', 'Watson mustache', 'watson', 'M'),
+				('facial', 'Hulk hogan mustache', 'hogan', 'M'),
+				('facial', 'Van dyke mustache', 'vandyke', 'M'),
+				('facial', 'Square mustache', 'chaplin', 'M'),
+				('facial', 'Selleck mustache', 'selleck', 'M'),
+				('facial', 'Neckbeard', 'neckbeard', 'M'),
+				('facial', 'Full beard', 'fullbeard', 'M'),
+				('facial', 'Long beard', 'longbeard', 'M'),
+				('facial', 'Very long beard', 'wise', 'M'),
+				('facial', 'Elvis sideburns', 'elvis', 'M'),
+				('facial', 'Abraham Lincoln beard', 'abe', 'M'),
+				('facial', 'Chinstrap', 'chin', 'M'),
+				('facial', 'Hipster beard', 'hip', 'M'),
+				('facial', 'Goatee', 'gt', 'M'),
+				('facial', 'Adam Jensen beard', 'jensen', 'M'),
+				('facial', 'Dwarf beard', 'dwarf', 'M'),
+				('facial', E'Five \'o clock shadow', 'fiveoclock', 'M'),
+				('facial', 'Fu manchu', 'fumanchu', 'M');
+
+			INSERT INTO appearances (type, name, icon_state, gender) VALUES
+				('skin', 'African 1', 'african1', NULL),
+				('skin', 'African 2', 'african2', NULL),
+				('skin', 'Albino', 'albino', NULL),
+				('skin', 'Arabian', 'arab', NULL),
+				('skin', 'Asian 1', 'asian1', NULL),
+				('skin', 'Asian 2', 'asian2', NULL),
+				('skin', 'Caucasian 1', 'caucasian1', NULL),
+				('skin', 'Caucasian 2', 'caucasian2', NULL),
+				('skin', 'Caucasian 3', 'caucasian3', NULL),
+				('skin', 'Latino', 'latino', NULL),
+				('skin', 'Mediterranean', 'mediterranean', NULL),
+				('skin', 'Indian', 'indian', NULL);
+
+			INSERT INTO appearances (type, name, icon_state, gender) VALUES
+				('underwear', 'nude', NULL, NULL),
+				('underwear', 'Mens white', 'male_white', 'M'),
+				('underwear', 'Mens grey', 'male_grey', 'M'),
+				('underwear', 'Mens green', 'male_green', 'M'),
+				('underwear', 'Mens blue', 'male_blue', 'M'),
+				('underwear', 'Mens black', 'male_black', 'M'),
+				('underwear', 'Mankini', 'male_mankini', 'M'),
+				('underwear', 'Mens hearts boxer', 'male_hearts', 'M'),
+				('underwear', 'Mens black boxer', 'male_blackalt', 'M'),
+				('underwear', 'Mens grey boxer', 'male_greyalt', 'M'),
+				('underwear', 'Mens striped boxer', 'male_stripe', 'M'),
+				('underwear', 'Mens kinky', 'male_kinky', 'M'),
+				('underwear', 'Mens red', 'male_red', 'M'),
+				('underwear', 'Ladies red', 'female_red', 'F'),
+				('underwear', 'Ladies white', 'female_white', 'F'),
+				('underwear', 'Ladies yellow', 'female_yellow', 'F'),
+				('underwear', 'Ladies blue', 'female_blue', 'F'),
+				('underwear', 'Ladies black', 'female_black', 'F'),
+				('underwear', 'Ladies thong', 'female_thong', 'F'),
+				('underwear', 'Babydoll', 'female_babydoll', 'F'),
+				('underwear', 'Ladies baby-blue', 'female_babyblue', 'F'),
+				('underwear', 'Ladies green', 'female_green', 'F'),
+				('underwear', 'Ladies pink', 'female_pink', 'F'),
+				('underwear', 'Ladies kinky', 'female_kinky', 'F'),
+				('underwear', 'Tankini', 'female_tankini', 'F');
+		</sql>
+	</changeSet>
+	
+<!--
+	<changeSet id="2" author="nullquery">
+		<sql>
+			CREATE TABLE characters
+			(
+				id bigserial NOT NULL, 
+				owner character varying(30) NOT NULL, 
+				firstname character varying(30) NOT NULL, 
+				middlename character varying(20), 
+				lastname character varying(40) NOT NULL, 
+				hair_appearances_id bigint,
+				facial_hair_appearances_id bigint,
+				skin_appearances_id bigint,
+				underwear_appearances_id bigint,
+				CONSTRAINT characters_pkey PRIMARY KEY (id)
+			);
+		</sql>
+	</changeSet>
+-->
 </changelog>

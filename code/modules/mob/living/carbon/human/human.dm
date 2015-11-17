@@ -2,10 +2,10 @@
 {
 	icon									= 'icon/mob/human.dmi';
 	var
-		datum/appearance_style/skin;
-		datum/appearance_style/hair;
-		datum/appearance_style/facial;
-		datum/appearance_style/underwear;
+		skin_appearances_id;
+		hair_appearances_id;
+		facial_appearances_id;
+		underwear_appearances_id;
 		hair_color;
 		facial_color;
 
@@ -13,10 +13,10 @@
 	{
 		. = ..();
 
-		skin								= new/datum/appearance_style/skin/caucasian2();
-		hair								= new/datum/appearance_style/hair/spiky();
-		facial								= new/datum/appearance_style/facial/hogan();
-		underwear							= new/datum/appearance_style/underwear/male_hearts();
+		src.skin_appearances_id				= 78; // "Caucasian 2"
+		src.hair_appearances_id				= 1;  // "Short hair"
+		src.facial_appearances_id			= 67; // "Adam Jensen beard"
+		src.underwear_appearances_id		= 85; // "Mens grey"
 		hair_color							= rgb(0, 0, 0);
 		facial_color						= rgb(0, 0, 0);
 	}
@@ -31,11 +31,11 @@
 
 	UpdateIcon()
 	{
-		var/datum/appearance/app			= new/datum/appearance(src.gender, src.skin);
+		var/datum/appearance/app			= new/datum/appearance(src.gender, src.skin_appearances_id, src.hair_appearances_id, src.facial_appearances_id, src.underwear_appearances_id);
 
-		app.SetHairStyle(src.hair);
-		app.SetFacialHairStyle(src.facial);
-		app.SetUnderwearStyle(src.underwear);
+//		app.SetHairStyle(src.hair);
+//		app.SetFacialHairStyle(src.facial);
+//		app.SetUnderwearStyle(src.underwear);
 		app.SetHairColor(src.hair_color);
 		app.SetFacialHairColor(src.facial_color);
 

@@ -30,4 +30,16 @@
 			if (!last_action_hero.len)			{ last_action_hero = null; }
 		}
 	}
+
+	proc/getRSV(query, ...)
+	{
+		try
+		{
+			var/pgsql4dm/ResultSet/rs			= database_connection.query(arglist(args));
+
+			if (rs.next())						{ return rs.getString(1); }
+			else								{ return null; }
+		}
+		catch (var/exception/ex)				{ return null; }
+	}
 }

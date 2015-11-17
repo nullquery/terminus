@@ -86,15 +86,6 @@
 
 		closeBlankContainer();
 
-		waitForJquery(function()
-		{
-			$(document).ready(function()
-			{
-				var wndtwo = windows.create({ title: "Test Two", x: 1000 });
-				wndtwo.show();
-			});
-		});
-
 	</script>
 
 	<script type="text/javascript">
