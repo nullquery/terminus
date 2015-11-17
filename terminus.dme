@@ -32,5 +32,7 @@
 #include "webclient\chat.dms"
 #include "webclient\playerinfo.dms"
 #include "webclient\players_online.dms"
+#include "webclient\tinput.dms"
 #include "webclient\windows.dms"
+#include "webclient\resources\ua-parser.min.dms"
 // END_INCLUDE

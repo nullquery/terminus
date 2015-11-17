@@ -211,6 +211,54 @@
 						$(".blank_container").hide();
 					}
 				});
+
+				var feedback_window;
+				$("#btn_feedback").on("click", function()
+				{
+					if (!feedback_window || feedback_window.isDisposed())
+					{
+						feedback_window			= windows.create({ "title" : "Leave feedback...", "destroyOnClose": true, "width": 500, "height": 600, "resizable": false });
+
+						var contentElement		= feedback_window.getContentElement();
+
+						contentElement.html("<div style=\"margin: 8px;\">" + $("#form_feedback").html() + "</div>");
+
+						var parser				= new UAParser();
+						var uaInfo				= parser.getResult();
+
+						browser					= uaInfo["browser"]["name"] + " " + uaInfo["browser"]["version"];
+						system_os				= uaInfo["os"]["name"] + " " + uaInfo["os"]["version"];
+
+						contentElement.find("input[name=system_os]").val(system_os);
+						contentElement.find("input[name=browser]").val(browser);
+
+						contentElement.find(".feedback_form").on("submit", function(e)
+						{
+							e.preventDefault();
+
+							var title			= $(this).find("input[name=title]").val();
+							var type			= $(this).find("select[name=type]").val();
+							var system_os		= $(this).find("input[name=system_os]").val();
+							var browser			= $(this).find("input[name=browser]").val();
+							var message			= $(this).find("textarea[name=message]").val();
+
+							sendTopic({
+								"action": "feedback",
+								"title": title,
+								"type": type,
+								"system_os": system_os,
+								"browser": browser,
+								"message": message
+							});
+
+							feedback_window.hide();
+
+							alert("Your feedback has been sent.");
+						});
+
+						feedback_window.show();
+					}
+				});
 			});
 		});
 	</script>
@@ -450,7 +498,7 @@
 							<ul class="dropdown-menu">
 								<li><a>View changelog</a></li>
 								<li><a>Show who's online</a></li>
-								<li><a>Report a bug...</a></li>
+								<li><a id="btn_feedback">Leave feedback</a></li>
 								<li><a class="logout_button">Logout</a></li>
 							</ul>
 						</div>
@@ -464,4 +512,33 @@
 			</td>
 		</tr>
 	</table>
+	<div id="form_feedback" style="display: none;">
+		<form class="feedback_form">
+			<div class="form-group">
+				<label>Title</label>
+				<input type="text" name="title" class="form-control" maxlength="80" required="required" />
+			</div>
+			<div class="form-group">
+				<label>Type</label>
+				<select name="type" class="form-control" required="required">
+					<option value=""></option>
+					<option value="B">Bug report</option>
+					<option value="F">Feature request</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label>Operating System</label>
+				<input type="text" name="system_os" class="form-control" maxlength="100" disabled="disabled" />
+			</div>
+			<div class="form-group">
+				<label>Web Browser</label>
+				<input type="text" name="browser" class="form-control" maxlength="100" disabled="disabled" />
+			</div>
+			<div class="form-group">
+				<label>Message</label>
+				<textarea name="message" class="form-control" required="required"></textarea>
+			</div>
+			<button type="submit" class="btn btn-sm btn-default">Send feedback</button>
+		</form>
+	</div>
 </body>

@@ -47,6 +47,31 @@
 					}
 				}
 			}
+			else
+			{
+				// Global functions.
+
+				switch (href_list["action"])
+				{
+					if ("feedback")
+					{
+						var/title		= href_list["title"];
+						var/type		= href_list["type"];
+						var/system_os	= href_list["system_os"];
+						var/browser		= href_list["browser"];
+						var/message		= href_list["message"];
+
+						try
+						{
+							database_connection.exec("INSERT INTO feedback (type, author, title, system_os, browser, message, created, updated) VALUES($1, $2, $3, $4, $5, $6, NOW(), NOW())", "[type]", "[src.key]", " [title]", "[system_os]", "[browser]", "[message]");
+						}
+						catch (var/exception/ex)
+						{
+							LogException(ex);
+						}
+					}
+				}
+			}
 		}
 		if (href == "test")
 		{

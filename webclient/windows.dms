@@ -86,6 +86,7 @@
 			this.resizable				= false;
 			this.closeable				= false;
 			this.destroyOnClose			= options["destroyOnClose"];
+			this.disposed				= false;
 
 			var twindow					= this;
 			this.dragging				= false;
@@ -238,8 +239,14 @@
 			if (this.destroyOnClose)
 			{
 				this.elem.remove();
-				delete this;
+
+				this.disposed			= true;
 			}
+		}
+
+		TWindow.prototype.isDisposed = function()
+		{
+			return this.disposed;
 		}
 
 		TWindow.prototype.isVisible = function()

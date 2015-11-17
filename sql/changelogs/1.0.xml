@@ -8,8 +8,11 @@
 				type character varying(1) NOT NULL,
 				author character varying(30) NOT NULL,
 				title character varying(100) NOT NULL,
+				system_os character varying(100) NOT NULL,
+				browser character varying(100) NOT NULL,
 				message text NOT NULL,
-				applies_to character varying(1) NOT NULL,
+				created timestamp without time zone NOT NULL,
+				updated timestamp without time zone NOT NULL,
 				CONSTRAINT feedback_pkey PRIMARY KEY (id)
 			);
 		</sql>
