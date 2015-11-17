@@ -74,7 +74,7 @@
 			});
 
 			this.elem.append("<div class=\"titlebar\"><span class=\"title\"></span><button type=\"button\" class=\"btn btn-sm btn-default btn-close\" style=\"display: none;\">&times;</button></div>");
-			this.elem.append("<div class=\"content\"></div>");
+			this.elem.append("<div class=\"content\"><div></div></div>");
 
 			var directions = ["nw", "ne", "sw", "se", "n", "e", "s", "w"]
 			for (var i in directions)
@@ -256,7 +256,38 @@
 
 		TWindow.prototype.getContentElement = function()
 		{
-			return this.elem.find("> .content");
+			return this.elem.find("> .content > div");
+		}
+
+		TWindow.prototype.setWidth = function(width)
+		{
+			this.elem.css("width", width + "px");
+		}
+
+		TWindow.prototype.setHeight = function(height)
+		{
+			this.elem.css("height", height + "px");
+		}
+
+		TWindow.prototype.sizeToFit = function()
+		{
+			var elem					= this.getContentElement();
+
+			this.setWidth(elem.outerWidth());
+			this.setHeight(elem.outerHeight() + this.elem.find(".titlebar").outerHeight());
+		}
+
+		TWindow.prototype.center = function()
+		{
+			var windowWidth				= $("#skin").width();
+			var windowHeight			= $("#skin").height();
+			var width					= this.elem.outerWidth();
+			var height					= this.elem.outerHeight();
+
+			var left					= ((windowWidth / 2) - (width / 2)).toFixed(0);
+			var top						= ((windowHeight / 2) - (height / 2)).toFixed(0);
+
+			this.elem.css({ "left": left + "px", "top": top + "px" });
 		}
 
 		windows.create = function(options)
@@ -276,6 +307,38 @@
 				closeable: true,
 				destroyOnClose: false
 			}, options));
+		}
+
+		windows.alert = function(message, options)
+		{
+			var wnd = new TWindow($.extend({
+				title: "Terminus",
+				x: 50,
+				y: 50,
+				width: 200,
+				height: 200,
+				minWidth: 50,
+				minHeight: 50,
+				maxWidth: 600,
+				maxHeight: 600,
+				draggable: true,
+				resizable: false,
+				closeable: true,
+				destroyOnClose: true
+			}, options));
+
+			var contentElement			= wnd.getContentElement();
+
+			contentElement.append($("<p></p>").text(message));
+
+			contentElement.append($("<button type=\"button\" class=\"btn btn-sm btn-default\">OK</button>").on("click", function(e)
+			{
+				wnd.hide();
+			}));
+
+			wnd.show();
+			wnd.sizeToFit();
+			wnd.center();
 		}
 	});
 </script>

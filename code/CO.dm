@@ -40,6 +40,6 @@
 			if (rs.next())						{ return rs.getString(1); }
 			else								{ return null; }
 		}
-		catch (var/exception/ex)				{ return null; }
+		catch ()								{ return null; }
 	}
 }
