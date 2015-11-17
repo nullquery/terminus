@@ -15,6 +15,14 @@
 		padding: 4px;
 	}
 
+	.window > .titlebar .btn-close
+	{
+		float: right;
+		font-size: 18px;
+		padding: 2px;
+		line-height: 12px;
+	}
+
 	.window > .content
 	{
 		background-color: #EFEFEF;
@@ -65,7 +73,7 @@
 				"max-height": options["maxHeight"] + "px"
 			});
 
-			this.elem.append("<div class=\"titlebar\"><span class=\"title\"></span></div>");
+			this.elem.append("<div class=\"titlebar\"><span class=\"title\"></span><button type=\"button\" class=\"btn btn-sm btn-default btn-close\" style=\"display: none;\">&times;</button></div>");
 			this.elem.append("<div class=\"content\"></div>");
 
 			var directions = ["nw", "ne", "sw", "se", "n", "e", "s", "w"]
@@ -76,6 +84,8 @@
 
 			this.draggable				= false;
 			this.resizable				= false;
+			this.closeable				= false;
+			this.destroyOnClose			= options["destroyOnClose"];
 
 			var twindow					= this;
 			this.dragging				= false;
@@ -100,6 +110,14 @@
 
 					twindow.dragging	= true;
 					$("#skin").css("cursor", "move");
+				}
+			});
+
+			this.elem.find(".titlebar > .btn-close").on("click", function(e)
+			{
+				if (twindow.closeable)
+				{
+					twindow.hide();
 				}
 			});
 
@@ -177,6 +195,7 @@
 			this.setTitle(options["title"]);
 			this.setDraggable(options["draggable"]);
 			this.setResizable(options["resizable"]);
+			this.setCloseable(options["closeable"]);
 		}
 
 		TWindow.prototype.setTitle = function(title)
@@ -199,6 +218,14 @@
 			else						{ this.elem.find(".resize-grip").hide(); }
 		}
 
+		TWindow.prototype.setCloseable = function(closeable)
+		{
+			this.closeable				= closeable;
+
+			if (closeable)				{ this.elem.find(".titlebar .btn-close").show(); }
+			else						{ this.elem.find(".titlebar .btn-close").hide(); }
+		}
+
 		TWindow.prototype.show = function()
 		{
 			this.elem.show();
@@ -207,6 +234,12 @@
 		TWindow.prototype.hide = function()
 		{
 			this.elem.hide();
+
+			if (this.destroyOnClose)
+			{
+				this.elem.remove();
+				delete this;
+			}
 		}
 
 		TWindow.prototype.isVisible = function()
@@ -232,7 +265,9 @@
 				maxWidth: 600,
 				maxHeight: 600,
 				draggable: true,
-				resizable: true
+				resizable: true,
+				closeable: true,
+				destroyOnClose: false
 			}, options));
 		}
 	});
