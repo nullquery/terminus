@@ -1,23 +1,121 @@
 <byondclass name="playerinfo">
 	<style>
+		.playerinfo
+		{
+			font-size: 11px;
+		}
 
-	.panel-default
-	{
-		border-color: #9B9B9B;
-	}
+		.playerinfo .name, .playerinfo .mugshot, .playerinfo .stat, .playerinfo .skills, .playerinfo .inventory .slot
+		{
+			border: 1px solid #5D4037;
+			background-color: #3E2723;
+			color: #EFEBE9;
+		}
 
-	.panel > .panel-body
-	{
-		color: #86CBCB;
-		background-color: #3B3A3A;
-		padding: 1px;
-	}
+		.playerinfo .name
+		{
+			text-align: center;
+			padding: 1px 0px;
+			height: 20px;
+		}
 
-	.panel > .panel-body p
-	{
-		margin: 2px 0px;
-		font-size: 11px;
-	}
+		.playerinfo .mugshot
+		{
+			width: 105px;
+			float: left;
+			border-top: 0px;
+		}
+
+		.playerinfo .mugshot table
+		{
+			width: 100%;
+			height: 100%;
+		}
+
+		.playerinfo .mugshot td
+		{
+			text-align: center;
+			vertical-align: middle;
+		}
+
+		.playerinfo .mugshot, .playerinfo .stat
+		{
+			height: 105px;
+		}
+
+		.playerinfo .stats:after
+		{
+			content: "";
+			display: block;
+			clear: left;
+		}
+
+		.playerinfo .stats, .playerinfo .stat, .playerinfo .skills
+		{
+			float: left;
+		}
+
+		.playerinfo .stat,
+		.playerinfo .skills
+		{
+			border-top: 0px;
+		}
+
+		.playerinfo .stat
+		{
+			width: 6px;
+			position: relative;
+			border-left: 0px;
+		}
+
+		.playerinfo .stat > div
+		{
+			position: absolute;
+			bottom: 0px;
+			left: 0px;
+			right: 0px;
+		}
+
+		.playerinfo .skills
+		{
+			width: calc(100% - 105px - 6px - 6px);
+			font-size: 9.5px;
+			border-left: 0px;
+		}
+
+		.playerinfo .skills > table
+		{
+			width: 100%;
+			table-layout: fixed;
+		}
+
+		.playerinfo .skills > table td
+		{
+			text-align: center;
+			border-top: 1px solid #5D4037;
+		}
+
+		.playerinfo .skills > table tr:first-child td
+		{
+			border-top: 0px;
+		}
+
+		.playerinfo .inventory
+		{
+			position: relative;
+		}
+
+		.playerinfo .inventory .slot
+		{
+			width: 32px;
+			height: 32px;
+			position: absolute;
+		}
+
+		.playerinfo .inventory .slot.large
+		{
+			width: 64px;
+		}
 
 	</style>
 	<script>
@@ -35,13 +133,21 @@
 				},
 				output: function(obj)
 				{
+					var srcElem					= this.elem;
+
 					try
 					{
 						waitForJquery(function()
 						{
 							var name			= obj.list[0]["text"];
+							var icon			= obj.list[1]["file"];
 
-							$(".panel-body").find(".player_name").text(name);
+							$(srcElem).find(".name").text(name);
+
+							var mugshotElem		= $(srcElem).find(".mugshot td");
+
+							mugshotElem.empty();
+							mugshotElem.append($("<img style=\"width: 64px;\" />").attr("src", icon));
 						});
 					}
 					catch (ex)
@@ -53,9 +159,75 @@
 			}
 		}
 	</script>
-	<div class="panel panel-default">
-		<div class="panel-body">
-			<p>Name: <span class="player_name"></span></p>
+	<div class="playerinfo">
+		<div class="name"></div>
+		<div class="clearfix">
+			<div class="mugshot"><table><tr><td></td></tr></table></div>
+			<div class="stats">
+				<div class="stat">
+					<div class="health" style="background-color: #C62828; height: 50%;"></div>
+				</div>
+				<div class="stat">
+					<div class="stamina" style="background-color: #1565C0; height: 70%;"></div>
+				</div>
+			</div>
+			<div class="skills">
+				<colgroup>
+					<col style="width: 40px;" />
+					<col style="width: 60px;" />
+					<col style="width: 40px;" />
+					<col style="width: 60px;" />
+				</colgroup>
+				<table>
+					<tr>
+						<td>AGI</td>
+						<td>62</td>
+						<td>LVL</td>
+						<td>7</td>
+					</tr>
+					<tr>
+						<td>DEX</td>
+						<td>71</td>
+						<td>MRK</td>
+						<td>80</td>
+					</tr>
+					<tr>
+						<td>STR</td>
+						<td>56</td>
+						<td>EXP</td>
+						<td>92</td>
+					</tr>
+					<tr>
+						<td>LDR</td>
+						<td>66</td>
+						<td>MEC</td>
+						<td>76</td>
+					</tr>
+					<tr>
+						<td>WIS</td>
+						<td>82</td>
+						<td>MED</td>
+						<td>23</td>
+					</tr>
+					<tr>
+						<td colspan="2">HEALTH</td>
+						<td colspan="2">79/79</td>
+					</tr>
+					<tr>
+						<td colspan="2">STAMINA</td>
+						<td colspan="2">5/5</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div class="inventory">
+			<div class="slot" data-slot="head" style="left: 5px; top: 25px;"></div>
+			<div class="slot" data-slot="head" style="left: 5px; top: 67px;"></div>
+			<div class="slot" data-slot="face" style="left: 111px; top: 25px;"></div>
+			<div class="slot" data-slot="suit" style="left: 148px; top: 25px;"></div>
+			<div class="slot" data-slot="pants" style="left: 148px; top: 67px;"></div>
+			<div class="slot large" data-slot="r_hand" style="left: 42px; top: 67px;"></div>
+			<div class="slot large" data-slot="l_hand" style="left: 42px; top: 25px;"></div>
 		</div>
 	</div>
 </byondclass>

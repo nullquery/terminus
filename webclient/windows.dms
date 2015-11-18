@@ -1,7 +1,7 @@
 <style>
 	.window
 	{
-		border: 1px solid #888;
+		border: 1px solid #424242;
 		position: absolute;
 		top: 50px;
 		left: 50px;
@@ -10,7 +10,7 @@
 
 	.window > .titlebar
 	{
-		background-color: #444;
+		background-color: #616161;
 		color: #FFF;
 		padding: 4px;
 	}
@@ -25,7 +25,7 @@
 
 	.window > .content
 	{
-		background-color: #EFEFEF;
+		background-color: #E0E0E0;
 		position: absolute;
 		top: 24px;
 		left: 0px;
@@ -38,7 +38,7 @@
 	{
 		position: absolute;
 		z-index: 2;
-		border: 1px dashed #888;
+		border: 1px dashed #424242;
 		display: none;
 	}
 
@@ -340,5 +340,26 @@
 			wnd.sizeToFit();
 			wnd.center();
 		}
+
+		$(document).ready(function()
+		{
+			$(".static-window").each(function()
+			{
+				var options				= {};
+
+				if ($(this).attr("data-title"))			{ options["title"] = $(this).attr("data-title"); }
+				if ($(this).attr("data-width"))			{ options["width"] = $(this).attr("data-width"); }
+				if ($(this).attr("data-height"))		{ options["height"] = $(this).attr("data-height"); }
+
+				var wnd									= windows.create(options);
+
+				if ($(this).attr("data-style"))			{ wnd.getContentElement().parent().attr("style", $(this).attr("data-style")); }
+
+				wnd.getContentElement().append(this);
+				wnd.show();
+
+				$(this).data("twindow", wnd);
+			});
+		});
 	});
 </script>

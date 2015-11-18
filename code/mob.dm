@@ -7,6 +7,7 @@
 	proc
 		UpdateIcon()									{ /* empty */ }
 		UpdateClothing()								{ /* empty */ }
+		GetIcon(dir, size)								{ /* empty */ }
 
 	Login()
 	{

@@ -43,7 +43,7 @@
 				{
 					if("update")
 					{
-						if (mob){ src << output(list("[mob.r_name]"), id); }
+						if (mob){ src << output(list("[mob.r_name]", mob.GetIcon(SOUTH, 64)), id); }
 					}
 				}
 			}

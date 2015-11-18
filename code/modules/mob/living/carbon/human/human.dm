@@ -58,6 +58,16 @@
 		UpdateClothing();
 	}
 
+	GetIcon(dir, size = 32)
+	{
+		var/datum/appearance/app			= new/datum/appearance(src.gender, src.skin_appearances_id, src.hair_appearances_id, src.facial_appearances_id, src.underwear_appearances_id);
+		var/icon/I							= app.Generate(dir);
+
+		if (size != 32)						{ I.Scale(size, size); }
+
+		return I;
+	}
+
 	proc
 		UpdateItems()
 		{
