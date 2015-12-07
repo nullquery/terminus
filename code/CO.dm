@@ -38,8 +38,8 @@
 			var/pgsql4dm/ResultSet/rs			= database_connection.query(arglist(args));
 
 			if (rs.next())						{ return rs.getString(1); }
-			else								{ return null; }
+			else								{ return ""; }
 		}
-		catch ()								{ return null; }
+		catch ()								{ return ""; }
 	}
 }
